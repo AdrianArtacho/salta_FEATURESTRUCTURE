@@ -50,3 +50,7 @@ Thumbs.db
 
 # Ignore .venv
 .venv
+
+# Ignore INPUT & OUTPUT
+INPUT/*
+OUTPUT/*
