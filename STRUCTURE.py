@@ -1,14 +1,23 @@
 import gui.gui_enterstring as gui_enterstring
 import gui.gui_menu as gui_menu
 import gui.gui_browse as gui_browse
+import gui.gui_check as gui_check
 import os
 import json
 import pandas as pd
 import write_weights
 import color_choice
+import resolution
+
+# label_list = ['Numbers of pulses:', 'Frequency (Hz):', 'Pulse width (ms):', 'Amplitude (V):']
+# values_list = ['11', '22', '33', '44']
+# selected_labels, selected_values = gui_check.main(label_list, values_list)
+# print(selected_labels)
+# print(selected_values)
+# # exit()
 
 ## ENTER PROJECT NAME AND DESCRIPTION
-proj_name = gui_enterstring.main('This string will identify all files generated from here...', 
+proj_name = gui_enterstring.main('This string will identify the overall project.', 
                                     'enter string:', 
                                     'Merge Name',
                                     default_text='test')
@@ -22,24 +31,35 @@ proj_description = gui_enterstring.main('You may enter a short description here.
 input_path_options = ['INPUT/', '../plotly/OUTPUT', '../../plotly/OUTPUT']
 input_path = gui_menu.main(input_path_options, 
                         "Where should we look for input files?", 
-                        "Input Path", 
+                        "Path to CLASS/SUBSET", 
                         default_option=0, 
                         font=('Arial Bold', 14))
 
-# folder_path = "INPUT/testu51"
 print("input_path:", input_path)
 
 path_to_file_in_folder = gui_browse.main(params_title='Browse files', 
          params_initbrowser=input_path,
          params_extensions='.csv',               # E.g. '.csv'
          size=(40,20),
+         verbose=False
          )
 
-print(path_to_file_in_folder)
+print("path_to_file_in_folder:", path_to_file_in_folder)
 
 selected_folder_path = os.path.dirname(path_to_file_in_folder)
-print(selected_folder_path)
+selected_folder_name = os.path.basename(selected_folder_path)
+selected_folder_parent = os.path.dirname(selected_folder_path)
+print("selected_folder_path:", selected_folder_path)
+print("selected_folder_path:", selected_folder_name)
+print("selected_folder_parent:", selected_folder_parent)
+# exit()
 
+class_name = gui_enterstring.main('Is this the right name of the class you are about to process?', 
+                                    'enter string:', 
+                                    'Merge Name',
+                                    default_text=selected_folder_name)
+
+print("class_name:", class_name)
 # exit()
 
 def find_json_files(folder_path):
@@ -61,7 +81,7 @@ else:
     print("No JSON files found in the specified folder.")
 
 
-##
+## EXTRACT FROM JSON
 
 def extract_features_from_json(json_file):
     with open(json_file, 'r') as file:
@@ -86,12 +106,45 @@ def json_to_dataframe(folder_path):
 
 # folder_path = "/path/to/your/json/files"
 df = json_to_dataframe(selected_folder_path)
-print(df)
+# print(df)
 
+# Assuming df is your DataFrame with the 'Weight' column containing floats as strings
+df['Weight'] = df['Weight'].astype(float)  # Convert the 'Weight' column to float
+
+# Add a new column "weightPercent" with the scaled weight values rounded to 2 decimal places
+df['weightPercent'] = (df['Weight'] * 100).round(4)
+
+df_sorted = df.sort_values(by='Weight', ascending=False)
+
+print(df_sorted)
+# exit()
+feature_list = df_sorted['Feature'].tolist()
+weightPercent_list = df_sorted['weightPercent'].tolist()
+# exit()
+# label_list = ['Numbers of pulses:', 'Frequency (Hz):', 'Pulse width (ms):', 'Amplitude (V):']
+# values_list = ['11', '22', '33', '44']
+selected_features, selected_values = gui_check.main(feature_list, weightPercent_list)
+# print(selected_features)
+# print(selected_values)
+
+print("CLUSTERING FOLLOWING FEATURES:", selected_features)
+
+feature_value = selected_features[0]
+print(feature_value)
+
+# Find the corresponding 'Path' value based on the 'Feature' value
+path_value = df.loc[df['Feature'] == feature_value, 'Path'].iloc[0]
+
+print("Path value corresponding to", feature_value, ":", path_value)
+filename_from_path = os.path.basename(path_value)
+print("filename_from_path:", filename_from_path)
+recreated_path = selected_folder_path+"/"+filename_from_path
+print("recreated_path:", recreated_path)
+exit()
 ## CHOOSE PROJECT COLOR
 project_color = color_choice.main()
 
-write_weights.main(df, 
-                   project_id=proj_name, 
+write_weights.main(df_sorted, 
+                   project_id=class_name, 
                    project_color=project_color,
-                   csv_file='weights_'+proj_name+'.csv')
+                   csv_file='weights_'+class_name+'.csv')

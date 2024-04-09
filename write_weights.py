@@ -14,8 +14,10 @@ def main(df,
     #Resulting csv filepath
     filepath = output_path+project_id+'/'+csv_file
 
-    # Drop the 'Path' column
-    df = df.drop(columns=['Path'])
+    # Drop columns except 'Feature', 'Weight'
+    # df = df.drop(columns=['Path'])
+    desired_columns = ['Feature', 'Weight']
+    df = df.loc[:, desired_columns]
 
     # Insert the 'class' column with values 'project_id' after 'Feature' column
     df.insert(df.columns.get_loc('Feature') + 1, 'class', project_id)
