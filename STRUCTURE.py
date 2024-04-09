@@ -1,8 +1,11 @@
 import gui.gui_enterstring as gui_enterstring
 import gui.gui_menu as gui_menu
+import gui.gui_browse as gui_browse
 import os
 import json
 import pandas as pd
+import write_weights
+import color_choice
 
 ## ENTER PROJECT NAME AND DESCRIPTION
 proj_name = gui_enterstring.main('This string will identify all files generated from here...', 
@@ -23,6 +26,22 @@ input_path = gui_menu.main(input_path_options,
                         default_option=0, 
                         font=('Arial Bold', 14))
 
+# folder_path = "INPUT/testu51"
+print("input_path:", input_path)
+
+path_to_file_in_folder = gui_browse.main(params_title='Browse files', 
+         params_initbrowser=input_path,
+         params_extensions='.csv',               # E.g. '.csv'
+         size=(40,20),
+         )
+
+print(path_to_file_in_folder)
+
+selected_folder_path = os.path.dirname(path_to_file_in_folder)
+print(selected_folder_path)
+
+# exit()
+
 def find_json_files(folder_path):
     json_files = []
     for root, dirs, files in os.walk(folder_path):
@@ -31,8 +50,8 @@ def find_json_files(folder_path):
                 json_files.append(os.path.join(root, file))
     return json_files
 
-folder_path = "INPUT/testu51"
-json_files = find_json_files(folder_path)
+
+json_files = find_json_files(selected_folder_path)
 
 if json_files:
     print("Found JSON files:")
@@ -66,9 +85,13 @@ def json_to_dataframe(folder_path):
     return df
 
 # folder_path = "/path/to/your/json/files"
-df = json_to_dataframe(folder_path)
+df = json_to_dataframe(selected_folder_path)
 print(df)
 
+## CHOOSE PROJECT COLOR
+project_color = color_choice.main()
 
-
-# exit()
+write_weights.main(df, 
+                   project_id=proj_name, 
+                   project_color=project_color,
+                   csv_file='weights_'+proj_name+'.csv')
