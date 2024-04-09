@@ -54,3 +54,4 @@ Thumbs.db
 # Ignore INPUT & OUTPUT
 INPUT/*
 OUTPUT/*
+INTER/*
