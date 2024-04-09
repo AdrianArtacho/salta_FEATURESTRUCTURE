@@ -8,6 +8,8 @@ import pandas as pd
 import write_weights
 import color_choice
 import resolution
+import aggregate
+import create_folder
 
 # label_list = ['Numbers of pulses:', 'Frequency (Hz):', 'Pulse width (ms):', 'Amplitude (V):']
 # values_list = ['11', '22', '33', '44']
@@ -114,37 +116,52 @@ df['Weight'] = df['Weight'].astype(float)  # Convert the 'Weight' column to floa
 # Add a new column "weightPercent" with the scaled weight values rounded to 2 decimal places
 df['weightPercent'] = (df['Weight'] * 100).round(4)
 
-df_sorted = df.sort_values(by='Weight', ascending=False)
+# df_sorted = df.sort_values(by='Weight', ascending=False)
+df_sorted = df.sort_values(by='Weight', ascending=False).reset_index(drop=True)
+
 
 print(df_sorted)
 # exit()
+
 feature_list = df_sorted['Feature'].tolist()
 weightPercent_list = df_sorted['weightPercent'].tolist()
-# exit()
 # label_list = ['Numbers of pulses:', 'Frequency (Hz):', 'Pulse width (ms):', 'Amplitude (V):']
 # values_list = ['11', '22', '33', '44']
-selected_features, selected_values = gui_check.main(feature_list, weightPercent_list)
-# print(selected_features)
-# print(selected_values)
+selected_features, selected_values = gui_check.main(feature_list, weightPercent_list, verbose=False)
+if selected_features != []:
 
-print("CLUSTERING FOLLOWING FEATURES:", selected_features)
+    ## IF SOME FEATURES WERE SELECTED FOR AGGREGATION
+    print("AGGREGATING FOLLOWING FEATURES:", selected_features)
+    
+    create_folder.main(class_name, local_folder = 'INTER')
+    exit()
 
-feature_value = selected_features[0]
-print(feature_value)
+    list_of_features_to_aggregate = []
 
-# Find the corresponding 'Path' value based on the 'Feature' value
-path_value = df.loc[df['Feature'] == feature_value, 'Path'].iloc[0]
+    for feature in selected_features:
+        print("feature:", feature)
 
-print("Path value corresponding to", feature_value, ":", path_value)
-filename_from_path = os.path.basename(path_value)
-print("filename_from_path:", filename_from_path)
-recreated_path = selected_folder_path+"/"+filename_from_path
-print("recreated_path:", recreated_path)
-exit()
-## CHOOSE PROJECT COLOR
-project_color = color_choice.main()
+        # Find the corresponding 'Path' value based on the 'Feature' value
+        path_value = df.loc[df['Feature'] == feature, 'Path'].iloc[0]
+        print("path_value:", path_value)
 
-write_weights.main(df_sorted, 
-                   project_id=class_name, 
-                   project_color=project_color,
-                   csv_file='weights_'+class_name+'.csv')
+        print("Path value corresponding to", feature, ":", path_value)
+        filename_from_path = os.path.basename(path_value)
+        print("filename_from_path:", filename_from_path)
+        recreated_path = selected_folder_path+"/"+filename_from_path
+        print("recreated_path:", recreated_path)
+        list_of_features_to_aggregate.append(recreated_path)
+
+    print("list_of_features_to_aggregate:", list_of_features_to_aggregate)
+
+    aggregated_df = aggregate.main(list_of_features_to_aggregate)
+
+    aggregated_df.to_csv("aggregated_features.csv", index=False)
+    exit()
+    ## CHOOSE PROJECT COLOR
+    project_color = color_choice.main()
+
+    write_weights.main(df_sorted, 
+                    project_id=class_name, 
+                    project_color=project_color,
+                    csv_file='weights_'+class_name+'.csv')

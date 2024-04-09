@@ -1,18 +1,18 @@
 import pandas as pd
 
 ## RENDER IN DIFFERENT RESOLUTION
-def main(df):
-    # Convert 'x_axis' and 'y_axis' columns to numeric type
-    df['x_axis'] = pd.to_numeric(df['x_axis'], errors='coerce')
-    df['y_axis'] = pd.to_numeric(df['y_axis'], errors='coerce')
-    # Round index to 2 decimal points
-    df.index = df.index.round(2)
-    # Group by rounded index and calculate mean for 'x_axis' and 'y_axis'
-    result_df = df.groupby(level=0).agg({'x_axis': 'mean', 'y_axis': 'mean'})
-    # For non-numeric columns, take the first occurrence for each group
-    non_numeric_cols = [col for col in df.columns if col not in ['x_axis', 'y_axis']]
+def main(df, decimal_points=2):
+    df_copy = df.copy()
+    # Convert 'x_axis' column to numeric type
+    df_copy['x_axis'] = pd.to_numeric(df_copy['x_axis'], errors='coerce')
+    # Round 'x_axis' to the specified resolution
+    df_copy['x_axis'] = df_copy['x_axis'].round(decimal_points)
+    # Group by rounded 'x_axis' and calculate mean for 'y_axis'
+    result_df = df_copy.groupby('x_axis')['y_axis'].mean().reset_index()
+    # Since 'feature' and 'tuples' are non-numeric columns, we'll simply take the first occurrence for each group
+    non_numeric_cols = ['feature', 'tuples']
     for col in non_numeric_cols:
-        result_df[col] = df.groupby(level=0)[col].first()
+        result_df[col] = df_copy.groupby('x_axis')[col].first().reset_index(drop=True)
     # return result_df
 
     print(result_df.head())
@@ -33,4 +33,4 @@ def main(df):
 if __name__ == "__main__":
     example_file="INPUT/testu51/testu51-MFCC9.csv"
     df = pd.read_csv(example_file)
-    main(df)
+    main(df, decimal_points=2)
