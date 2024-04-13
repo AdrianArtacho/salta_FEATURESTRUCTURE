@@ -181,7 +181,7 @@ def main(selected_folder_path='',
         aggregated_df = aggregate.main(list_of_features_to_aggregate)
 
         concatenated_feature_names = '_'.join(list_of_feature_names)
-        aggregated_filename = "aggregated_"+concatenated_feature_names
+        aggregated_filename = "aggregate_"+concatenated_feature_names
         aggregated_path = inter_folder+"/"+class_name+"/"+aggregated_filename+".csv"
         aggregated_df.to_csv(aggregated_path, index=False)
         print("Result of the aggregation saved as", aggregated_path)
