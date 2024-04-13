@@ -5,7 +5,8 @@ def main(df,
          project_id='',
          project_color='red',
          output_path='OUTPUT/',
-         csv_file='output.csv'):
+         csv_file='output.csv',
+         default_value=1.0):    #For entries lacking a value, or nan
 
 
     # CREATE A PROJECT FOLDER IN CASE IT FOESN'T EXIST
@@ -24,6 +25,9 @@ def main(df,
 
     # Insert the 'color' column with values 'red' after 'Weight' column
     df.insert(df.columns.get_loc('Weight') + 1, 'color', project_color)
+
+    # Set default value (1.0) for NaN values in 'Weight' column
+    df['Weight'].fillna(default_value, inplace=True)
 
     print(df.head())
     # exit()
