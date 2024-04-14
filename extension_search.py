@@ -1,7 +1,7 @@
 import os
 import sys
 
-def main(path, extension): # find_files_with_extension
+def main(path, extension, except_string="weight"): # find_files_with_extension
     """
     Find all files with the specified extension in the specified path.
     
@@ -15,7 +15,7 @@ def main(path, extension): # find_files_with_extension
     file_paths = []
     for item in os.listdir(path):
         item_path = os.path.join(path, item)
-        if os.path.isfile(item_path) and item.endswith(extension):
+        if os.path.isfile(item_path) and item.endswith(extension) and not item.startswith(except_string):
             file_paths.append(item_path)
     return file_paths
 
@@ -29,7 +29,7 @@ if __name__ == "__main__":
     directory = sys.argv[1]
     extension = sys.argv[2]
     
-    files = main(directory, extension) # find_files_with_extension
+    files = main(directory, extension, except_string="weight") # find_files_with_extension
     if files:
         print(f"Files with extension '{extension}' found in {directory}:")
         for file_path in files:

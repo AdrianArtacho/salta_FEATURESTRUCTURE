@@ -3,12 +3,17 @@ import create_folder
 import extension_search
 import read_features
 import pandas as pd
+import alter_path
+import os
+import extract_from_json
 
 
 ## CREATE A PROJECT FOLDER IN "OUTPUT/"
 project_name = 'proj'
-
 create_folder.main(project_name, local_folder = 'OUTPUT')
+# Define the output directory
+output_dir = "OUTPUT"+'/'+project_name
+os.makedirs(output_dir, exist_ok=True)
 
 ## LIST FOLDERS IN "INTER/"
 directory = "INTER/"
@@ -16,46 +21,96 @@ directory = "INTER/"
 folders = list_folders.main(directory)
 json_files = []
 aggr_files = []
+weig_files = []
 
 for folder in folders:
-    print(folder)
     json_path = extension_search.main(directory+folder, '.json')
-    json_files.append(json_path[0])
-    print("json_path:", json_path)
+    json_files.extend(json_path)
 
-    csv_paths = extension_search.main(directory+folder, '.csv')
-    aggr_files.append(csv_paths[0])
-    print("csv_paths:", csv_paths)
+    agg_paths = extension_search.main(directory+folder, '.csv', except_string="weight")
+    if len(agg_paths) != 0:
+        aggr_files.extend(agg_paths)
 
+    csv_paths = extension_search.main(directory+folder, '.csv', except_string=" ")
+    # Filter out elements from csv_paths that are not in agg_paths
+    weight_paths = [path for path in csv_paths if path not in agg_paths]
+    weig_files.extend(weight_paths)
 
 print("json_files:", json_files)
 print("aggr_files:", aggr_files)
+print("weig_files:", weig_files)
+
 
 ## MAKE A LIST OF ALL FEATURES (AND AGGREGATES) WITH THE PATH
 
-# Create an empty DataFrame
-df = pd.DataFrame(columns=['feature', 'weight', 'path'])
+print("json_files:::", json_files)
+# exit()
 
-for json_file in json_files:
-    # json_file = "INTER/testu52/testu52_json.json"
-    print("json_file:", json_file)
+df_extracted = extract_from_json.main(json_files)
+# print(df_extracted)
+# exit()
+## SUBSTITUTE PATHS for those pointing at the wrong folder (where needed)
+# Define a function to apply alter_path.main() to each element in the "path" column
+def update_path(original_path):
+    return alter_path.main(original_path, orig_folder="OUTPUT", alter_folder="INPUT")
 
-    # Load the JSON file and extract features
-    features = read_features.main(json_file)
-    print("features:", features)
-        
-    # Add features to the DataFrame
-    for feature in features:
-        df.loc[len(df)] = feature
+# Apply the function to each element in the "path" column and update the DataFrame
+df_extracted['path'] = df_extracted['path'].apply(update_path)
 
-    # exit()
-
-# Display the DataFrame
-print(len(df))
-# print(df.head())
-print(df)
-
+print(df_extracted)
 
 ## INTEGRATE ALL FEATURES
 
+paths_list = df_extracted['path'].tolist()
+# print('paths_list:', paths_list)
+
+# Initialize an empty list to store DataFrames
+dfs = []
+
+# Iterate through each file path
+for path in paths_list:
+    # Read the CSV file into a DataFrame
+    df = pd.read_csv(path)
+    # Append the DataFrame to the list
+    dfs.append(df)
+
+# Concatenate all DataFrames in the list into a single DataFrame
+combined_df = pd.concat(dfs, ignore_index=True)
+
+# Now combined_df contains the contents of all CSV files combined together
+print(combined_df)
+
+# Define the output file path
+output_file = os.path.join(output_dir, project_name+".csv")
+
+# Save the concatenated DataFrame to a CSV file
+combined_df.to_csv(output_file, index=False)
+
+# exit()
 ## GENERATE A WEIGHTS FILE FOR ALL FEATURES
+print(weig_files)
+# Initialize an empty list to store DataFrames
+df_agg = []
+
+# Iterate through each file path
+for file in weig_files:
+    # Read the CSV file into a DataFrame
+    df = pd.read_csv(file)
+    # Append the DataFrame to the list
+    df_agg.append(df)
+
+# Concatenate all DataFrames in the list into a single DataFrame
+concatenated_df = pd.concat(df_agg, ignore_index=True)
+
+# # Define the output directory
+# output_dir = "OUTPUT"+'/'+project_name
+# os.makedirs(output_dir, exist_ok=True)
+
+# Define the output file path
+output_file = os.path.join(output_dir, "weights_"+project_name+".csv")
+
+# Save the concatenated DataFrame to a CSV file
+concatenated_df.to_csv(output_file, index=False)
+
+# Now concatenated_df contains the contents of all CSV files concatenated together
+print(f"Concatenated data saved to: {output_file}")
