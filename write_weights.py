@@ -4,16 +4,16 @@ import create_folder
 def main(df, 
          project_id='',
          project_color='red',
-         output_path='OUTPUT/',
+         output_path='OUTPUT',
          csv_file='output.csv',
          default_value=1.0):    #For entries lacking a value, or nan
 
 
     # CREATE A PROJECT FOLDER IN CASE IT FOESN'T EXIST
-    create_folder.main(project_id, local_folder = 'OUTPUT')
+    create_folder.main(project_id, local_folder = output_path)
 
     #Resulting csv filepath
-    filepath = output_path+project_id+'/'+csv_file
+    filepath = output_path+'/'+project_id+'/'+csv_file
 
     # Drop columns except 'Feature', 'Weight'
     # df = df.drop(columns=['Path'])

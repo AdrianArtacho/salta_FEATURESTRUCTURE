@@ -208,16 +208,19 @@ def main(selected_folder_path='',
         # shutil.copyfile(source_file_path, 
         #                 os.path.join(inter_folder+'/'+class_name, 
         #                 os.path.basename(source_file_path)))
-        # exit()
+        
 
         ## CHOOSE PROJECT COLOR
         project_color = color_choice.main()
+        
 
         print("df_sorted:")
         print(df_sorted)
         # exit()
 
+        # print("class_name:", class_name)
         create_folder.main(class_name, local_folder = 'INTER')  # In case there is no folder yet
+        # exit()
 
         write_weights.main(df_sorted, 
                     project_id=class_name, 
@@ -225,6 +228,8 @@ def main(selected_folder_path='',
                     output_path='INTER/',
                     csv_file='weights_'+class_name+'.csv',
                     default_value=1.0)      # when there is not a weight, like in aggregations
+
+        # exit()
 
     print("STRUCTURE A CLASS DONE!")
     return done_with_class, selected_folder_path, class_name, inter_folder+"/"+class_name
