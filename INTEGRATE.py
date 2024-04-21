@@ -67,7 +67,8 @@ def main(project_name='proj',
     
     ## INTEGRATE ALL FEATURES
     paths_list = df_extracted['path'].tolist()
-    # print('paths_list:', paths_list)
+    print('paths_list:', paths_list)
+    # exit()
 
     # Initialize an empty list to store DataFrames
     dfs = []
@@ -86,6 +87,7 @@ def main(project_name='proj',
 
     # Now combined_df contains the contents of all CSV files combined together
     print(combined_df)
+    # exit()
 
     # Define the output file path
     output_file = os.path.join(output_dir, project_name+".csv")

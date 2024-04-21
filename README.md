@@ -25,6 +25,7 @@ The results will be stored in `INTER/`, in the form of modified weights file, mo
 The last stage will integrate all plots and produce one final .csv file and one finel weights file from the information in `INTER/`:
 
 ```shell
+# This bit is now integrated in the main `STRUCT.py` script
 python INTEGRATE.py
 ```
 
