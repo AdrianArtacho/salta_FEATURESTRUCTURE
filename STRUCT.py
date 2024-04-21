@@ -17,6 +17,7 @@ import report
 import INTEGRATE
 import deriv_csvnames
 import deriv_jsonnames
+import check_merge
 
 
 ## ENTER PROJECT NAME AND DESCRIPTION
@@ -79,3 +80,23 @@ INTEGRATE.main(project_name=proj_name,
          rename_features_after_class=rename_features_after_class)
 
 report.main(proj_description, proj_name, output_folder='OUTPUT', verbose=True)
+
+## Check result
+
+
+
+# merge_file = '/Users/artacho/Work/Dissertation/CODE/salta/featurestructure/OUTPUT/proj/proj.csv'
+merge_file = 'OUTPUT/'+proj_name+'/'+proj_name+'.csv'
+unique_features, folder_path = check_merge.main(file_path=merge_file)
+merge_unique = len(unique_features)
+
+# wei_file = '/Users/artacho/Work/Dissertation/CODE/salta/featurestructure/OUTPUT/proj/proj.csv'
+wei_file = 'OUTPUT/'+proj_name+'/weights_'+proj_name+'.csv'
+unique_features, folder_path = check_merge.main(file_path=wei_file,params_initbrowser=folder_path)
+wei_unique = len(unique_features)
+
+if merge_unique == wei_unique:
+    print("Feaure check successful!")
+else: 
+    print("There's a mismatch in the amount of features in the merge file and the weights file...")
+print(merge_unique, "unique features in merge file;", wei_unique, "in weights file.")

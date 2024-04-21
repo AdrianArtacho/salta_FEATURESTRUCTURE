@@ -75,16 +75,33 @@ def main(project_name='proj',
 
     print("rename_features_after_class:", rename_features_after_class)
 
+    print("paths_list:")
+    print(paths_list)
+    print(len(paths_list))
+    counter=0
+    # exit()
+
     # Iterate through each file path
     for path in paths_list:
+        counter = counter + 1
+        print("---->",counter)
         print("Now processing...", path)
         # Read the CSV file into a DataFrame
         df = pd.read_csv(path)
+
+        # # Extract the filename without extension
+        # feat_string = os.path.splitext(os.path.basename(path))[0]
+        # print("feat_string:",feat_string)
+
+        # # Modify all values in the 'feature' column
+        # df['feature'] = feat_string
+
         if rename_features_after_class:
             df = deriv_df.main(df, path, column_name='feature', separator='_') #!!!!
         # Append the DataFrame to the list
         dfs.append(df)
 
+    # exit()
     # Concatenate all DataFrames in the list into a single DataFrame
     combined_df = pd.concat(dfs, ignore_index=True)
 
@@ -109,7 +126,7 @@ def main(project_name='proj',
         # Read the CSV file into a DataFrame
         df = pd.read_csv(file)
         if rename_features_after_class:
-            df = deriv_df.main(df, path, column_name='feature', separator='_') #!!!!
+            df = deriv_df.main(df, file, column_name='feature', separator='_') #!!!!
 
         # Append the DataFrame to the list
         df_agg.append(df)
