@@ -36,3 +36,15 @@ To-Do
 - Issue when features have the same name? modify them based on the class name in both the csv AND the weights file?
 
 - possibility to ommit features?
+
+---
+
+test_2agg:
+>
+> paths_list:
+['INPUT/testu51/testu51-Energy.csv',
+'INPUT/testu51/testu51-EntropyEnergy.csv',
+'INPUT/testu51/testu51-SpectralCentroid.csv',
+'INPUT/testu51/testu51-SpectralEntropy.csv',
+'INPUT/testu51/testu51-d.csv',
+'INTER/testu51/aggregate_MFCC2_MFCC13_MFCC8_MFCC7_MFCC11_MFCC9_MFCC4_MFCC10_MFCC3_MFCC12_MFCC5_MFCC6.csv']

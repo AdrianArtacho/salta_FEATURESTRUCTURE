@@ -73,8 +73,11 @@ def main(project_name='proj',
     # Initialize an empty list to store DataFrames
     dfs = []
 
+    print("rename_features_after_class:", rename_features_after_class)
+
     # Iterate through each file path
     for path in paths_list:
+        print("Now processing...", path)
         # Read the CSV file into a DataFrame
         df = pd.read_csv(path)
         if rename_features_after_class:
