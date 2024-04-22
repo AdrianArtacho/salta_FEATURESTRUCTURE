@@ -1,3 +1,7 @@
+"""
+This script removes all the files within a given folder (empties it).
+"""
+
 import os
 
 def main(folder_path, verbose=False): #remove_files_in_folder
