@@ -1,6 +1,6 @@
 import shutil
 import os
-import create_folder
+import pyt.paths.create_folder as create_folder
 
 def main(source_file_path, destination_folder, destination_subfolder):
 

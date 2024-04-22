@@ -10,9 +10,9 @@ import write_weights
 import color_choice
 import resolution
 import aggregate
-import create_folder
+import pyt.paths.create_folder as create_folder
 import STRUCT_class
-import empty_folder
+import pyt.paths.empty_folder as empty_folder
 import report
 import INTEGRATE
 import deriv_csvnames

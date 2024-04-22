@@ -10,7 +10,7 @@ import write_weights
 import color_choice
 import resolution
 import aggregate
-import create_folder
+import pyt.paths.create_folder as create_folder
 import json_prune
 import copy_file
 
