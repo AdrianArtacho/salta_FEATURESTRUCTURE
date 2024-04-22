@@ -12,7 +12,7 @@ import resolution
 import aggregate
 import pyt.paths.create_folder as create_folder
 import json_prune
-import copy_file
+import pyt.paths.copy_file as copy_file
 
 
     
