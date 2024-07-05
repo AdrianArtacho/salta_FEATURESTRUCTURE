@@ -14,11 +14,12 @@ import pyt.paths.create_folder as create_folder
 import STRUCT_class
 import pyt.paths.empty_folder as empty_folder
 import report
-import INTEGRATE
+import INTEGRATE_sets
 import deriv_csvnames
 import deriv_jsonnames
 import check_merge
 import APP_url
+import URL_window
 
 
 ## ENTER PROJECT NAME AND DESCRIPTION
@@ -80,7 +81,7 @@ print("project_name:",proj_name)
 print("rename_features_after_class:",rename_features_after_class)
 
 
-integration_dir = INTEGRATE.main(project_name=proj_name, 
+integration_dir = INTEGRATE_sets.main(project_name=proj_name, 
                                 output_folder='OUTPUT',
                                 directory = "INTER/",
                                 rename_features_after_class=rename_features_after_class)
@@ -109,4 +110,15 @@ print(merge_unique, "unique features in merge file;", wei_unique, "in weights fi
 
 concatenated_string = APP_url.main(integration_dir, verbose=False)
 print("concatenated_string:")
-# print(concatenated_string)
+print(concatenated_string)
+
+# closing_confirmation=URL_window.main(font_size=24, 
+#                     text2=integration_dir,
+#                     hyperlink2=concatenated_string,
+#                     text4=concatenated_string)
+# print(closing_confirmation)
+
+URL_window.main(font_size=32, text4_width=30,
+                text2=integration_dir,
+                hyperlink2=concatenated_string,
+                text4=concatenated_string)
