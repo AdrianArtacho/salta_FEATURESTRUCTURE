@@ -18,6 +18,7 @@ import INTEGRATE
 import deriv_csvnames
 import deriv_jsonnames
 import check_merge
+import APP_url
 
 
 ## ENTER PROJECT NAME AND DESCRIPTION
@@ -73,17 +74,22 @@ else:
 
 # exit()
 print("integrating...")
+# exit()
 
-INTEGRATE.main(project_name=proj_name, 
-         output_folder='OUTPUT',
-         directory = "INTER/",
-         rename_features_after_class=rename_features_after_class)
+print("project_name:",proj_name)
+print("rename_features_after_class:",rename_features_after_class)
 
+
+integration_dir = INTEGRATE.main(project_name=proj_name, 
+                                output_folder='OUTPUT',
+                                directory = "INTER/",
+                                rename_features_after_class=rename_features_after_class)
+
+# exit()
 report.main(proj_description, proj_name, output_folder='OUTPUT', verbose=True)
 
+# exit()
 ## Check result
-
-
 
 # merge_file = '/Users/artacho/Work/Dissertation/CODE/salta/featurestructure/OUTPUT/proj/proj.csv'
 merge_file = 'OUTPUT/'+proj_name+'/'+proj_name+'.csv'
@@ -96,7 +102,11 @@ unique_features, folder_path = check_merge.main(file_path=wei_file,params_initbr
 wei_unique = len(unique_features)
 
 if merge_unique == wei_unique:
-    print("Feaure check successful!")
+    print("Feature check successful!")
 else: 
     print("There's a mismatch in the amount of features in the merge file and the weights file...")
 print(merge_unique, "unique features in merge file;", wei_unique, "in weights file.")
+
+concatenated_string = APP_url.main(integration_dir, verbose=False)
+print("concatenated_string:")
+# print(concatenated_string)

@@ -7,11 +7,13 @@ import alter_path
 import os
 import extract_from_json
 import deriv_df
+import APP_url
 
 def main(project_name='proj', 
          output_folder='OUTPUT',
          directory = "INTER/",
-         rename_features_after_class=True):
+         rename_features_after_class=True,
+         verbose=True):
     
     ## CREATE A PROJECT FOLDER IN "OUTPUT/"
     create_folder.main(project_name, local_folder=output_folder)
@@ -51,19 +53,26 @@ def main(project_name='proj',
     # exit()
 
     df_extracted = extract_from_json.main(json_files)
-    # print(df_extracted)
+    if verbose:
+        print("______________________________")
+        print(df_extracted)
+        print("______________________________")
+
     # exit()
     ## SUBSTITUTE PATHS for those pointing at the wrong folder (where needed)
     # Define a function to apply alter_path.main() to each element in the "path" column
     def update_path(original_path):
-        return alter_path.main(original_path, orig_folder="OUTPUT", alter_folder="INPUT")
+        # return alter_path.main(original_path, orig_folder="OUTPUT", alter_folder="INPUT")
+        return alter_path.main(original_path, orig_folder="OUTPUT", alter_folder="../plotly/OUTPUT")
 
     # Apply the function to each element in the "path" column and update the DataFrame
     df_extracted['path'] = df_extracted['path'].apply(update_path)
 
-    print(df_extracted)
+    if verbose:
+        print("__________")
+        print(df_extracted)
+        print("__________")
 
-    
     
     ## INTEGRATE ALL FEATURES
     paths_list = df_extracted['path'].tolist()
@@ -146,6 +155,12 @@ def main(project_name='proj',
 
     # Now concatenated_df contains the contents of all CSV files concatenated together
     print(f"Concatenated data saved to: {output_file}")
+    if verbose:
+        print("INTEGRATing done!")
+        # print("Gnerating URL...")
+
+    return output_dir
+    
 
 if __name__ == "__main__":
     main()
