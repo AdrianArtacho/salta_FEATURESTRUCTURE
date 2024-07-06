@@ -20,6 +20,7 @@ import deriv_jsonnames
 import check_merge
 import APP_url
 import URL_window
+import url_function
 
 
 ## ENTER PROJECT NAME AND DESCRIPTION
@@ -108,17 +109,14 @@ else:
     print("There's a mismatch in the amount of features in the merge file and the weights file...")
 print(merge_unique, "unique features in merge file;", wei_unique, "in weights file.")
 
-concatenated_string = APP_url.main(integration_dir, verbose=False)
+concatenated_string, description_text = APP_url.main(integration_dir, verbose=False)
 print("concatenated_string:")
 print(concatenated_string)
 
-# closing_confirmation=URL_window.main(font_size=24, 
-#                     text2=integration_dir,
-#                     hyperlink2=concatenated_string,
-#                     text4=concatenated_string)
-# print(closing_confirmation)
+url_function.main(concatenated_string, integration_dir, description=description_text)
 
 URL_window.main(font_size=32, text4_width=30,
                 text2=integration_dir,
                 hyperlink2=concatenated_string,
                 text4=concatenated_string)
+

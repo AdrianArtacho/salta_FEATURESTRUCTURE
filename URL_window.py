@@ -7,9 +7,9 @@ def open_url(url):
     webbrowser.open_new(url)
 
 def main(font_size=12, text4_width=30,
-         text1="Upload the text to the SALTA APP",
+         text1="1. Upload the text to the SALTA APP",
          text2="SALTA APP Website", hyperlink1="https://adrianartacho.github.io/SALTA",
-         text3="Click on the URL below to apply the weights",
+         text3="2. Click on the URL below to apply the weights",
          text4="This is a very long string that should wrap to multiple lines if it exceeds the specified width limit.",
          hyperlink2="https://yourweightsurl.com"):
     
