@@ -21,13 +21,15 @@ import check_merge
 import APP_url
 import URL_window
 import url_function
+import multiply_round
 
+verbose=True
 
 ## ENTER PROJECT NAME AND DESCRIPTION
 proj_name = gui_enterstring.main('This string will identify the overall project.',
                                  'Merge Name',
                                  'project ID',
-                                 default_text='test')
+                                 default_text='exp?_SALTA')
 proj_description = gui_enterstring.main('You may enter a short description here...',
                                         'Description:',
                                         'Description',
@@ -98,6 +100,10 @@ merge_file = 'OUTPUT/'+proj_name+'/'+proj_name+'.csv'
 unique_features, folder_path = check_merge.main(file_path=merge_file)
 merge_unique = len(unique_features)
 
+if verbose:
+    print("merge_file:", merge_file)
+    # exit()
+
 # wei_file = '/Users/artacho/Work/Dissertation/CODE/salta/featurestructure/OUTPUT/proj/proj.csv'
 wei_file = 'OUTPUT/'+proj_name+'/weights_'+proj_name+'.csv'
 unique_features, folder_path = check_merge.main(file_path=wei_file,params_initbrowser=folder_path)
@@ -113,10 +119,12 @@ concatenated_string, description_text = APP_url.main(integration_dir, verbose=Fa
 print("concatenated_string:")
 print(concatenated_string)
 
+rounded_file_path = multiply_round.main(merge_file)
+
 url_function.main(concatenated_string, integration_dir, description=description_text)
 
 URL_window.main(font_size=32, text4_width=30,
-                text2=integration_dir,
+                text2=rounded_file_path,
                 hyperlink2=concatenated_string,
                 text4=concatenated_string)
 
