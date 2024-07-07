@@ -18,7 +18,7 @@ def savefile_path(file_path, output_folder, verbose=False):
     if verbose:
         print("substring_before_underscore:", substring_before_underscore)
 
-    generated_path = output_folder+name_string+'/'+substring_before_underscore+'r.csv'
+    generated_path = output_folder+name_string+'/'+substring_before_underscore+'.csv'
 
     if verbose:
         print("generated_path:", generated_path)
