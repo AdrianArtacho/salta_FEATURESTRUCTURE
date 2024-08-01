@@ -13,6 +13,7 @@ import aggregate
 import pyt.paths.create_folder as create_folder
 import json_prune
 import pyt.paths.copy_file as copy_file
+import altername
 
 
     
@@ -177,15 +178,26 @@ def main(selected_folder_path='',
         print("list_of_features_to_aggregate:", list_of_features_to_aggregate)
         print("list_of_feature_names:", list_of_feature_names)
 
-        # exit()
         aggregated_df = aggregate.main(list_of_features_to_aggregate)
 
         concatenated_feature_names = '_'.join(list_of_feature_names)
         aggregated_filename = "aggregate_"+concatenated_feature_names
+        
+        ##########
+        print("aggregated_filename:", aggregated_filename) #AAB
+
+        aggregated_filename = altername.main(aggregated_filename)
+        print("aggr_name:", aggregated_filename)
+        
+        # exit()
+        ###########
+        
         aggregated_path = inter_folder+"/"+class_name+"/"+aggregated_filename+".csv"
 
         # Modify all values in the 'feature' column
         aggregated_df['feature'] = aggregated_filename
+
+
 
         aggregated_df.to_csv(aggregated_path, index=False)
         print("Result of the aggregation saved as", aggregated_path)
