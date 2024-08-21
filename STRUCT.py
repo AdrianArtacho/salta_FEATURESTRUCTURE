@@ -1,25 +1,25 @@
-import gui.gui_enterstring as gui_enterstring
-import gui.gui_menu as gui_menu
-import gui.gui_browse as gui_browse
-import gui.gui_check as gui_check
-import gui.gui_buttons as gui_buttons
-import os
-import json
-import pandas as pd
-import write_weights
-import color_choice
-import resolution
-import aggregate
-import pyt.paths.create_folder as create_folder
+import gui.gui_enterstring_t as gui_enterstring
+# import gui.gui_menu as gui_menu
+# import gui.gui_browse as gui_browse
+# import gui.gui_check as gui_check
+import gui.gui_button_t as gui_button
+# import os
+# import json
+# import pandas as pd
+# import write_weights
+# import color_choice
+# import resolution
+# import aggregate
+# import pyt.paths.create_folder as create_folder
 import STRUCT_class
 import pyt.paths.empty_folder as empty_folder
 import report
 import INTEGRATE_sets
-import deriv_csvnames
-import deriv_jsonnames
+# import deriv_csvnames
+# import deriv_jsonnames
 import check_merge
 import APP_url
-import URL_window
+import URL_window_t as URL_window
 import url_function
 import multiply_round
 
@@ -30,12 +30,15 @@ proj_name = gui_enterstring.main('This string will identify the overall project.
                                  'Merge Name',
                                  'project ID',
                                  default_text='exp?_SALTA')
+# exit()
 proj_description = gui_enterstring.main('You may enter a short description here...',
                                         'Description:',
                                         'Description',
                                         default_text='Just doing some tests over here...')
 
+
 empty_folder.main("INTER/") # Clears the "INTER/" folder, except .gitkeep
+# exit()
 
 done_with_project = False
 rename_features_after_class = False
@@ -61,8 +64,9 @@ while done_with_project == False:
 
 
         options = ["Yes", "No"]
-        selected_option = gui_buttons.main(options, "Yes",dialog_text="Select an Option",
+        selected_option = gui_button.main(options, 0, dialog_text="Select an Option",
                                            title="Proceed with more features/classes?")  # button_dialog
+        # exit()
         # print(selected_option)
         if selected_option == options[0]:
             print("HERE rename features?")
@@ -99,7 +103,7 @@ report.main(proj_description, proj_name, output_folder='OUTPUT', verbose=True)
 merge_file = 'OUTPUT/'+proj_name+'/'+proj_name+'.csv'
 unique_features, folder_path = check_merge.main(file_path=merge_file)
 merge_unique = len(unique_features)
-
+# exit()
 if verbose:
     print("merge_file:", merge_file)
     # exit()
@@ -108,13 +112,14 @@ if verbose:
 wei_file = 'OUTPUT/'+proj_name+'/weights_'+proj_name+'.csv'
 unique_features, folder_path = check_merge.main(file_path=wei_file,params_initbrowser=folder_path)
 wei_unique = len(unique_features)
-
+# exit()
 if merge_unique == wei_unique:
     print("Feature check successful!")
 else: 
     print("There's a mismatch in the amount of features in the merge file and the weights file...")
 print(merge_unique, "unique features in merge file;", wei_unique, "in weights file.")
 
+# exit()
 concatenated_string, description_text = APP_url.main(integration_dir, verbose=False)
 print("concatenated_string:")
 print(concatenated_string)

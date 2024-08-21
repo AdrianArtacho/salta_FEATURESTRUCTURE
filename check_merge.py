@@ -1,5 +1,5 @@
 import pandas as pd
-import gui.gui_browse as gui_browse
+import gui.gui_browse_t as gui_browse
 import os
 
 def main(file_path='', params_initbrowser='OUTPUT/', column_name='feature',verbose=False):

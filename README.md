@@ -4,17 +4,24 @@ This repo combines multiple pdp files from different sources, runs the aggregati
 
 ---
 
+## Installation
+
+1. Clone repository
+
+2. Create venv
+
+```termminal
+    python3 -m venv ./.venv
+```
+
+---
+
 ## Usage
 
-Activate venv:
+Activate venv and run main script:
 
 ```shell
 python source .venv/bin/activate
-```
-
-Run the main script:
-
-```shell
 python STRUCT.py
 ```
 
@@ -31,11 +38,26 @@ python INTEGRATE.py
 
 ---
 
-To-Do
+## To-Do
 
 - Issue when features have the same name? modify them based on the class name in both the csv AND the weights file?
 
 - possibility to ommit features?
+
+- There is an issue with the SALAT gui:
+
+> - ~~Could it be the merged feature names, which may not exist in the weights file?~~
+>
+> - ~~Could it be combining modalities?~~
+>
+> - Could it be that the reason why there are two very similar files? (note, I NEED the surname for the files, because there are different settings) Does the format hold also for segtree?
+> 
+> - ~~Could it be specific features?~~
+> - ~~Could it be features with NaN as weight?~~
+>
+> - Could it be that the generated names are to long?
+
+!!! THE MERGING DOES NOT APPLY THE WEIGHTS PROPERLY!!!
 
 ---
 

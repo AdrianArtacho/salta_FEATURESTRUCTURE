@@ -28,6 +28,8 @@ def main(original_path, orig_folder="OUTPUT", alter_folder="INPUT", verbose=True
         # If the file doesn't exist at the original path, construct the alternative path
         alternative_path = os.path.join(alter_folder, os.path.relpath(original_path, orig_folder))
         # Check if the file exists at the alternative path
+        if verbose:
+            print("alternative_path:", alternative_path)
         if os.path.exists(alternative_path):
             if verbose:
                 print(f"File found at alternative path: {alternative_path}")

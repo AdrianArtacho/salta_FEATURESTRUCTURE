@@ -1,14 +1,14 @@
-import gui.gui_enterstring as gui_enterstring
-import gui.gui_menu as gui_menu
-import gui.gui_browse as gui_browse
-import gui.gui_check as gui_check
-import gui.debug as debug
+import gui.gui_enterstring_t as gui_enterstring
+import gui.gui_menu_t as gui_menu
+import gui.gui_browse_t as gui_browse
+import gui.gui_check_t as gui_check
+# import gui.debug as debug
 import os
 import json
 import pandas as pd
 import write_weights
-import color_choice
-import resolution
+import color_choice_t as color_choice
+# import resolution
 import aggregate
 import pyt.paths.create_folder as create_folder
 import json_prune
@@ -20,27 +20,28 @@ import altername
 def main(selected_folder_path='',
          selected_folder_name='',
          inter_filepath='', ## So thet the INTER JSON file can be found
-         verbose=True):
-    print("inter_filepath!!!", inter_filepath)
+         verbose=False):
+    print("\ninter_filepath!!!", inter_filepath)
 
+    
     if selected_folder_path == '':
         # Select input path
         input_path_options = ['INPUT/', '../plotly/OUTPUT', '../../plotly/OUTPUT']
         input_path = gui_menu.main(input_path_options, 
                                 "Where should we look for input files?", 
                                 "Path to CLASS/SUBSET", 
-                                default_option=0, 
+                                default_option=1, 
                                 font=('Arial Bold', 14))
-
+        # exit()
         print("input_path:", input_path)
 
-        path_to_file_in_folder = gui_browse.main(params_title='Browse files', 
+        path_to_file_in_folder = gui_browse.main(params_title='Select one of the files to confirm this is the right folder...', 
                 params_initbrowser=input_path,
                 params_extensions='.csv',               # E.g. '.csv'
                 size=(40,20),
                 verbose=False
                 )
-
+        # exit()
         print("path_to_file_in_folder:", path_to_file_in_folder)
         selected_folder_path = os.path.dirname(path_to_file_in_folder)
     else:
@@ -72,9 +73,12 @@ def main(selected_folder_path='',
                     json_files.append(os.path.join(root, file))
         return json_files
 
+    # exit()
     json_files = find_json_files(selected_folder_path)
     # else:
     #     json_files = find_json_files(inter_filepath)
+
+    # exit()
 
     if json_files:
         print("Found JSON files:")
@@ -97,8 +101,9 @@ def main(selected_folder_path='',
                 feature_list.append({"Feature": key, "Weight": weight, "Path": path})
             return feature_list
 
-    def json_to_dataframe(folder_path):
-        print("!!!!!folder_path!!!!",folder_path)
+    def json_to_dataframe(folder_path, verbose=False):
+        if verbose:
+            print("!!!!!folder_path!!!!",folder_path)
         json_files = [file for file in os.listdir(folder_path) if file.endswith("json.json")]
         all_features = []
         for file in json_files:
@@ -108,15 +113,19 @@ def main(selected_folder_path='',
         df = pd.DataFrame(all_features)
         return df
 
+    # exit()
     # folder_path = "/path/to/your/json/files"
-    print("!!!inter_filepath!!!", inter_filepath)
+    if verbose:
+        print("!!!inter_filepath!!!", inter_filepath)
+    
     if inter_filepath == '':
         working_json_filepath = selected_folder_path    # Original INPUT JSON file path
     else:
         working_json_filepath = inter_filepath  # Intermediate JSON file path
     # print(df)
 
-    print("!!!!working_json_filepath!!!!", working_json_filepath)
+    if verbose:
+        print("!!!!working_json_filepath!!!!", working_json_filepath)
     df = json_to_dataframe(working_json_filepath) # Either INPUT... or INTER...
     # print(df)
 
@@ -142,6 +151,7 @@ def main(selected_folder_path='',
     selected_features, selected_values = gui_check.main(feature_list, weightPercent_list, 
                                                         window_title='Merge features?',
                                                        verbose=False)
+    # exit()
     inter_folder = 'INTER'  
     if selected_features != []:
 
