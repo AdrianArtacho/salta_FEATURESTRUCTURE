@@ -59,6 +59,10 @@ python INTEGRATE.py
 
 !!! THE MERGING DOES NOT APPLY THE WEIGHTS PROPERLY!!!
 
+!!! The issue with the App seems to be the classes !!! The tests that didn't work (6 and 7) are the ones that have more than one different class. BUT `test3`DID work even though it has 2 different classes!
+
+Also, we encounter again the issue with space on the right from the plots, I can't remember if it was related to a minimum number of samples???
+
 ---
 
 test_2agg:
