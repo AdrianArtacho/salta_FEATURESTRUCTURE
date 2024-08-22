@@ -27,7 +27,9 @@ def main(df,
     df.insert(df.columns.get_loc('Weight') + 1, 'color', project_color)
 
     # Set default value (1.0) for NaN values in 'Weight' column
-    df['Weight'].fillna(default_value, inplace=True)
+    # df['Weight'].fillna(default_value, inplace=True)
+    df['Weight'] = df['Weight'].fillna(default_value)
+
 
     print(df.head())
     # exit()

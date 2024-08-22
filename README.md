@@ -40,6 +40,30 @@ python INTEGRATE.py
 
 ## To-Do
 
+Issue with merging features: (Does the module apply the right weights while aggregating features?)
+
+> make example test to see the issue
+> find where the merging happens
+> add button to make the next thing optional...
+> apply weights appropriately
+
+---
+
+Issue with the wrong X-axis representation in the App
+
+> I dealt with this before. Where could I find that?
+> We encounter again the issue with space on the right from the plots, I can't remember if it was related to a minimum number of samples???
+
+**NOW THE X_AXIS REPRESENTS MILLISECONDS**
+
+---
+
+Issue with the App sometimes giving me an error
+
+> - make a list of possible reasons
+> - nail down the causing issue
+> - analyze csv files directly, if no issue cpould be found...
+
 - Issue when features have the same name? modify them based on the class name in both the csv AND the weights file?
 
 - possibility to ommit features?
@@ -47,21 +71,18 @@ python INTEGRATE.py
 - There is an issue with the SALAT gui:
 
 > - ~~Could it be the merged feature names, which may not exist in the weights file?~~
->
+> 
 > - ~~Could it be combining modalities?~~
->
+> 
 > - Could it be that the reason why there are two very similar files? (note, I NEED the surname for the files, because there are different settings) Does the format hold also for segtree?
 > 
 > - ~~Could it be specific features?~~
+> 
 > - ~~Could it be features with NaN as weight?~~
->
+> 
 > - Could it be that the generated names are to long?
-
-!!! THE MERGING DOES NOT APPLY THE WEIGHTS PROPERLY!!!
-
-!!! The issue with the App seems to be the classes !!! The tests that didn't work (6 and 7) are the ones that have more than one different class. BUT `test3`DID work even though it has 2 different classes!
-
-Also, we encounter again the issue with space on the right from the plots, I can't remember if it was related to a minimum number of samples???
+> 
+> !!! The issue with the App seems to be the classes !!! The tests that didn't work (6 and 7) are the ones that have more than one different class. BUT `test3`DID work even though it has 2 different classes!
 
 ---
 

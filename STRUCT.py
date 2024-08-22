@@ -8,7 +8,7 @@ import gui.gui_button_t as gui_button
 # import pandas as pd
 # import write_weights
 # import color_choice
-# import resolution
+
 # import aggregate
 # import pyt.paths.create_folder as create_folder
 import STRUCT_class

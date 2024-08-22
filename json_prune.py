@@ -18,8 +18,9 @@ def main(json_file_path, features_to_remove, feature_to_include, output_json_fil
     data['featuredict'] = featuredict
 
     # Add new feature to the featuredict
-    name, aggr_path = feature_to_include
-    data['featuredict'][name] = {"path": aggr_path}
+    name, aggr_path, aggregated_weight = feature_to_include
+    data['featuredict'][name] = {"weight":aggregated_weight,
+                                 "path": aggr_path}
 
     # Write the updated data to a new JSON file
     with open(output_json_file_path, 'w') as output_json_file:

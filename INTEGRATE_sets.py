@@ -8,6 +8,7 @@ import os
 import extract_from_json
 import deriv_df
 import APP_url
+import fill_source
 
 def main(project_name='proj', 
          output_folder='OUTPUT',
@@ -68,11 +69,14 @@ def main(project_name='proj',
     # Apply the function to each element in the "path" column and update the DataFrame
     df_extracted['path'] = df_extracted['path'].apply(update_path)
 
+    # Sort the DataFrame based on the 'weight' column
+    df_extracted = df_extracted.sort_values(by='weight')
+
     if verbose:
         print("__________")
         print(df_extracted)
         print("__________")
-
+    # exit()
     
     ## INTEGRATE ALL FEATURES
     paths_list = df_extracted['path'].tolist()
@@ -113,6 +117,16 @@ def main(project_name='proj',
     # exit()
     # Concatenate all DataFrames in the list into a single DataFrame
     combined_df = pd.concat(dfs, ignore_index=True)
+
+
+    # THERE SEEMS TO BE MINIMUM X VALUES IN THE SALTA APP, SO BY MULTIPLYING BY 100 Y TURN THE X-VALUES INTO MILLISECONDS
+    combined_df['x_axis'] = combined_df['x_axis'] * 100
+    # Cast all values in the 'x_axis' column to integers (milliseconds)
+    combined_df['x_axis'] = combined_df['x_axis'].astype(int)
+
+    combined_df['source'].fillna('unknown', inplace=True) ###
+
+    # fill_source.main(combined_df)
 
     # Now combined_df contains the contents of all CSV files combined together
     print(combined_df)

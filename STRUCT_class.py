@@ -8,18 +8,19 @@ import json
 import pandas as pd
 import write_weights
 import color_choice_t as color_choice
-# import resolution
+
 import aggregate
 import pyt.paths.create_folder as create_folder
 import json_prune
 import pyt.paths.copy_file as copy_file
 import altername
+import aggr_weight
 
 
     
 def main(selected_folder_path='',
          selected_folder_name='',
-         inter_filepath='', ## So thet the INTER JSON file can be found
+         inter_filepath='', ## So that the INTER JSON file can be found
          verbose=False):
     print("\ninter_filepath!!!", inter_filepath)
 
@@ -164,6 +165,8 @@ def main(selected_folder_path='',
 
         list_of_features_to_aggregate = []
         list_of_feature_names = []
+
+        
         
         unselected_features = [feature for feature in feature_list if feature not in selected_features]
         print("unselected_features:", unselected_features)
@@ -187,8 +190,14 @@ def main(selected_folder_path='',
 
         print("list_of_features_to_aggregate:", list_of_features_to_aggregate)
         print("list_of_feature_names:", list_of_feature_names)
+        
 
-        aggregated_df = aggregate.main(list_of_features_to_aggregate)
+        aggregated_df = aggregate.main(list_of_features_to_aggregate, 
+                                       df_sorted, verbose=False) # just trying...
+        
+        aggregated_weight = aggr_weight.main(list_of_features_to_aggregate, df_sorted)
+
+        print(aggregated_df)
 
         concatenated_feature_names = '_'.join(list_of_feature_names)
         aggregated_filename = "aggregate_"+concatenated_feature_names
@@ -199,7 +208,6 @@ def main(selected_folder_path='',
         aggregated_filename = altername.main(aggregated_filename)
         print("aggr_name:", aggregated_filename)
         
-        # exit()
         ###########
         
         aggregated_path = inter_folder+"/"+class_name+"/"+aggregated_filename+".csv"
@@ -207,18 +215,16 @@ def main(selected_folder_path='',
         # Modify all values in the 'feature' column
         aggregated_df['feature'] = aggregated_filename
 
-
-
         aggregated_df.to_csv(aggregated_path, index=False)
         print("Result of the aggregation saved as", aggregated_path)
-        # exit()
         
 
-        feature_to_include = aggregated_filename, aggregated_path
+        feature_to_include = aggregated_filename, aggregated_path, aggregated_weight
         inter_json_file_path = json_prune.main(working_json_filepath+"/"+class_name+"_json.json", 
                                                selected_features,   # To prune, remove
                                                feature_to_include,  # To add
                                                inter_folder+"/"+class_name+"/"+class_name+"_json.json")
+        
         print("Intermediate JSON file created at:", inter_json_file_path)
 
     else:
