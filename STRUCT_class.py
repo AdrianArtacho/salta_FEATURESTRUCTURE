@@ -39,7 +39,7 @@ def main(selected_folder_path='',
         path_to_file_in_folder = gui_browse.main(params_title='Select one of the files to confirm this is the right folder...', 
                 params_initbrowser=input_path,
                 params_extensions='.csv',               # E.g. '.csv'
-                size=(40,20),
+                # size=(40,20),
                 verbose=False
                 )
         # exit()

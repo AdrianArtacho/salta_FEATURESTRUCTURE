@@ -110,7 +110,7 @@ def main(input_file_path='INTER/salta.csv',
 
     # Ask user
     answer = gui_button.main(('Yes','No'), default_option=1,     
-         dialog_text="Did it work on the SLATA App GUI?",
+         dialog_text="Did it work on the SALTA App GUI?",
          title="Choice", size=(20, 1))
 
     add_line_to_txt(description_path, f"Did it work? {answer}.")
