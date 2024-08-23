@@ -9,6 +9,7 @@ import extract_from_json
 import deriv_df
 import APP_url
 import fill_source
+import pyt.df.drop_col as dropcol
 
 def main(project_name='proj', 
          output_folder='OUTPUT',
@@ -119,27 +120,22 @@ def main(project_name='proj',
     # Concatenate all DataFrames in the list into a single DataFrame
     combined_df = pd.concat(dfs, ignore_index=True)
 
-
+    #################
     # THERE SEEMS TO BE MINIMUM X VALUES IN THE SALTA APP, SO BY MULTIPLYING BY 100 Y TURN THE X-VALUES INTO MILLISECONDS
     combined_df['x_axis'] = combined_df['x_axis'] * 100
     # Cast all values in the 'x_axis' column to integers (milliseconds)
     combined_df['x_axis'] = combined_df['x_axis'].astype(int)
-
-    # combined_df['source'].fillna('unknown', inplace=True) ###
-
-    # fill_source.main(combined_df)
-
-    # Now combined_df contains the contents of all CSV files combined together
-    print(combined_df)
-    # exit()
+    # Drop the 'tuples' and 'source' columns
+    data_reduced = dropcol.main(combined_df,colname='source')   #?
+    ################
 
     # Define the output file path
     output_file = os.path.join(output_dir, project_name+".csv")
     checkout_file = os.path.join('INTER', "salta.csv")
 
     # Save the concatenated DataFrame to a CSV file
-    combined_df.to_csv(output_file, index=False)
-    combined_df.to_csv(checkout_file, index=False)
+    data_reduced.to_csv(output_file, index=False)   #?
+    data_reduced.to_csv(checkout_file, index=False) #?
 
     # exit()
     ## GENERATE A WEIGHTS FILE FOR ALL FEATURES

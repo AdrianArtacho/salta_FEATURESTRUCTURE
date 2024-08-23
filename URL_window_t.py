@@ -1,4 +1,5 @@
 import webbrowser
+import CHECK_SALTA
 
 def open_url(url):
     webbrowser.open_new(url)
@@ -33,7 +34,10 @@ def main(font_size=12, text4_width=30,
     print("Select an option:")
     print("1. Open SALTA APP Website")
     print("2. Open the Weights URL")
-    print("3. Exit")
+    print("3. Run CHECK_SALTA.py")
+    print("4. Exit")
+
+    check_afterwards = False
 
     while True:
         choice = input("\nEnter the number of your choice: ").strip()
@@ -45,10 +49,18 @@ def main(font_size=12, text4_width=30,
             open_url(hyperlink2)
             print(f"Opening {hyperlink2}...\n")
         elif choice == "3":
+            print("Checking...")
+            check_afterwards = True
+            # CHECK_SALTA.main()
+            break
+        elif choice == "4":
             print("Exiting...")
             break
         else:
             print("Invalid choice. Please enter 1, 2, or 3.")
+
+    if check_afterwards:
+        CHECK_SALTA.main()
 
 if __name__ == "__main__":
     main(font_size=14, text4_width=30)

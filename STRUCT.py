@@ -64,7 +64,7 @@ while done_with_project == False:
 
 
         options = ["Yes", "No"]
-        selected_option = gui_button.main(options, 0, dialog_text="Select an Option",
+        selected_option = gui_button.main(options, 1, dialog_text="Select an Option",
                                            title="Proceed with more features/classes?")  # button_dialog
         # exit()
         # print(selected_option)

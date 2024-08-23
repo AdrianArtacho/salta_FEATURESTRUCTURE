@@ -32,6 +32,12 @@ You will have to enter general infos about the project, select the feature folde
 python INTEGRATE_sets.py
 ```
 
+Mind you, this line in `INTEGRATE_sets.py` drops column 'source' to make the files lighter on the server:
+
+```python
+data_reduced = dropcol.main(combined_df,colname='source')
+```
+
 ---
 
 ## CHECK_SALTA
@@ -88,7 +94,7 @@ Could it be that the reason why there are two very similar files?
 
 ~~Could it be features with NaN as weight?~~
 
-Could it be that the generated names are to long?
+~~Could it be that the generated names are to long?~~
 
 > !!! The issue with the App seems to be the classes !!! The tests that didn't work (6 and 7) are the ones that have more than one different class. BUT `test3`DID work even though it has 2 different classes!
 > 
@@ -98,6 +104,56 @@ Could it be that the generated names are to long?
 
 I could run it locally in node.js to see the error message
 
+> ...
+
+###### Go systematically:
+
+> 1 class (no merge)
+> 
+> > mic    `test_19` NO                                    16mb
+> > 
+> > mix    `test_20` NO                                    19mb
+> > 
+> > imu    `test_21` NO                                    2.1mb
+> > 
+> > mpipe    `test_22` NO                                9.9mb
+> 
+> 1 class (merged)
+> 
+> > mic     `test_23` NO
+> > 
+> > mix
+> > 
+> > imu
+> > 
+> > mpipe
+> 
+> 2 classes (no merge)
+> 
+> > mic + imu    `test_3`
+> > 
+> > ...
+> 
+> 2 classes (each merged as one feature)
+> 
+> > mic + imu    `test_5` NO, `test_12` SI    21mb
+> > 
+> > imu + mpipe `test_6` SI                            16mb
+> > 
+> > mpipe + mic `test_7` NO, `test_14` SI    20mb
+> > 
+> > imu + mix `test_8` NO, `test_15` NO    20mb
+> > 
+> > mic + mix `test_17` NO                            37mb
+> > 
+> > mpipe + mix `test_16` NO                        25mb
+> 
+> 3 classe (each merged)
+> 
+> > mic + imu + mpipe `test_18` NO            24mb
+> > 
+> > ...
+> 
 > ...
 
 ---
@@ -117,6 +173,7 @@ I could run it locally in node.js to see the error message
 ### To-Do
 
 - possibility to ommit features?
+- If there is only ONE feature, do not ask whether or not to merge!
 
 ---
 

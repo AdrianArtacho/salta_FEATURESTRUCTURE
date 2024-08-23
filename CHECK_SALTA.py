@@ -109,7 +109,7 @@ def main(input_file_path='INTER/salta.csv',
     print("description_path:", description_path)
 
     # Ask user
-    answer = gui_button.main(('Yes','No'), default_option=1,     
+    answer = gui_button.main(('Yes','No'), default_option=0,     
          dialog_text="Did it work on the SALTA App GUI?",
          title="Choice", size=(20, 1))
 
