@@ -93,6 +93,8 @@ Could it be that the generated names are to long?
 > !!! The issue with the App seems to be the classes !!! The tests that didn't work (6 and 7) are the ones that have more than one different class. BUT `test3`DID work even though it has 2 different classes!
 > 
 > It is merging what creates the source column...
+> 
+> 112 chars still no problem...
 
 I could run it locally in node.js to see the error message
 
