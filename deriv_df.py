@@ -11,7 +11,11 @@ def main(df, file_path, column_name='feature', separator='_'):
     # Print the folder name
     print("The file is located in a folder named:", folder_name)
 
+    last_bit = folder_name.rsplit('_', 1)[-1]   # gets the last bit of the folder name, after the last underscore
+    # exit()
+
     # Modify the names in the dataframe
+    # df[column_name] = last_bit + separator + df[column_name]
     df[column_name] = folder_name + separator + df[column_name]
     
     return df

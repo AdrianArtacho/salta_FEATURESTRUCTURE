@@ -111,6 +111,7 @@ def main(project_name='proj',
 
         if rename_features_after_class:
             df = deriv_df.main(df, path, column_name='feature', separator='_') #!!!!
+        
         # Append the DataFrame to the list
         dfs.append(df)
 
@@ -124,7 +125,7 @@ def main(project_name='proj',
     # Cast all values in the 'x_axis' column to integers (milliseconds)
     combined_df['x_axis'] = combined_df['x_axis'].astype(int)
 
-    combined_df['source'].fillna('unknown', inplace=True) ###
+    # combined_df['source'].fillna('unknown', inplace=True) ###
 
     # fill_source.main(combined_df)
 
@@ -134,9 +135,11 @@ def main(project_name='proj',
 
     # Define the output file path
     output_file = os.path.join(output_dir, project_name+".csv")
+    checkout_file = os.path.join('INTER', "salta.csv")
 
     # Save the concatenated DataFrame to a CSV file
     combined_df.to_csv(output_file, index=False)
+    combined_df.to_csv(checkout_file, index=False)
 
     # exit()
     ## GENERATE A WEIGHTS FILE FOR ALL FEATURES
@@ -163,15 +166,22 @@ def main(project_name='proj',
 
     # Define the output file path
     output_file = os.path.join(output_dir, "weights_"+project_name+".csv")
+    checkout_wei = os.path.join('INTER', "weights.csv")
 
     # Save the concatenated DataFrame to a CSV file
     concatenated_df.to_csv(output_file, index=False)
+    concatenated_df.to_csv(checkout_wei, index=False)
 
     # Now concatenated_df contains the contents of all CSV files concatenated together
     print(f"Concatenated data saved to: {output_file}")
     if verbose:
         print("INTEGRATing done!")
         # print("Gnerating URL...")
+
+
+    # This saves the working directory path as a txt in INTER
+    with open("INTER/folderpath.txt", "w") as file:
+        file.write(output_dir)
 
     return output_dir
     
