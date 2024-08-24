@@ -138,7 +138,7 @@ I could run it locally in node.js to see the error message
 > 
 > > mic + imu    `test_5` NO, `test_12` SI    21mb
 > > 
-> > imu + mpipe `test_6` SI                            16mb
+> > imu + mpipe `test_6` SI, `test_26`NO    7.9mb
 > > 
 > > mpipe + mic `test_7` NO, `test_14` SI    20mb
 > > 
