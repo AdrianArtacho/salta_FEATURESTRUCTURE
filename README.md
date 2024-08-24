@@ -50,6 +50,16 @@ python CHECK_SALTA.py
 
 ---
 
+## Color conventions
+
+> RED mpipe
+> 
+> BLUE audio
+> 
+> GREEN inert
+
+---
+
 ## Progress
 
 Issue with merging features: (Does the module apply the right weights while aggregating features?)
@@ -110,9 +120,9 @@ I could run it locally in node.js to see the error message
 
 > 1 class (no merge)
 > 
-> > mic    `test_19` NO                                    16mb
+> > mic    `test_19`
 > > 
-> > mix    `test_20` NO                                    19mb
+> > mix    `test_20` NO
 > > 
 > > imu    `test_21` NO                                    2.1mb
 > > 
@@ -120,7 +130,7 @@ I could run it locally in node.js to see the error message
 > 
 > 1 class (merged)
 > 
-> > mic     `test_23` NO
+> > mic     `test_23`
 > > 
 > > mix
 > > 
@@ -174,6 +184,13 @@ I could run it locally in node.js to see the error message
 
 - possibility to ommit features?
 - If there is only ONE feature, do not ask whether or not to merge!
+- There are 2 .csv generated. I guess it is ok if one of them is 'raw' (with source, no prettyfy, etc. and the other one the one meant for the GUI) --> rename the output files to achieve this
+- At "check"... could there be a 'yes to all' and 'no to all' options?
+- UPLOAD to Drive:
+
+> exp16a_mic-vs-imu-mpipe
+> 
+> exp16a_mic-vs-mix
 
 ---
 
@@ -186,3 +203,9 @@ test_2agg:
 > 'INPUT/testu51/testu51-SpectralEntropy.csv',
 > 'INPUT/testu51/testu51-d.csv',
 > 'INTER/testu51/aggregate_MFCC2_MFCC13_MFCC8_MFCC7_MFCC11_MFCC9_MFCC4_MFCC10_MFCC3_MFCC12_MFCC5_MFCC6.csv']
+
+
+
+0,0.0,aggregate_TiltZ_AccelX_TiltY,lower_limit
+
+477300,0.0,aggregate_TiltZ_AccelX_TiltY,higher_limit

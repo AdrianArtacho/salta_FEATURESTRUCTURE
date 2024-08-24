@@ -10,6 +10,10 @@ import deriv_df
 import APP_url
 import fill_source
 import pyt.df.drop_col as dropcol
+import CHECK_SALTA
+import gui.gui_button_t as gui_button
+import resize
+import pprint
 
 def main(project_name='proj', 
          output_folder='OUTPUT',
@@ -130,16 +134,19 @@ def main(project_name='proj',
     ################
 
     # Define the output file path
-    output_file = os.path.join(output_dir, project_name+".csv")
-    checkout_file = os.path.join('INTER', "salta.csv")
+    output_file_salta = os.path.join(output_dir, project_name+".csv")
+    checkout_file_salta = os.path.join('INTER', "salta.csv")
 
     # Save the concatenated DataFrame to a CSV file
-    data_reduced.to_csv(output_file, index=False)   #?
-    data_reduced.to_csv(checkout_file, index=False) #?
+    data_reduced.to_csv(output_file_salta, index=False)   #?
+    data_reduced.to_csv(checkout_file_salta, index=False) #?
+
+
 
     # exit()
     ## GENERATE A WEIGHTS FILE FOR ALL FEATURES
     print(weig_files)
+    # exit()
     # Initialize an empty list to store DataFrames
     df_agg = []
 
@@ -161,15 +168,35 @@ def main(project_name='proj',
     # os.makedirs(output_dir, exist_ok=True)
 
     # Define the output file path
-    output_file = os.path.join(output_dir, "weights_"+project_name+".csv")
+    output_file_wei = os.path.join(output_dir, "weights_"+project_name+".csv")
     checkout_wei = os.path.join('INTER', "weights.csv")
 
     # Save the concatenated DataFrame to a CSV file
-    concatenated_df.to_csv(output_file, index=False)
+    concatenated_df.to_csv(output_file_wei, index=False)
     concatenated_df.to_csv(checkout_wei, index=False)
 
+    ####### CHECKING SIZE
+    salta_filesize_bytes, salta_filesize_mb  = CHECK_SALTA.get_filesize(file_path=checkout_file_salta) # "INTER/salta.csv"
+    size_result = f"The size of the SALTA .csv file is {salta_filesize_bytes} ({salta_filesize_mb} mb)"
+    resize_choices = ("Try to reduce size", "Leave as it is")
+    button_choice = gui_button.main(resize_choices, default_option=0, dialog_text=size_result, 
+                                    title="Choice", verbose=False)
+    print("button_choice:", button_choice)
+
+    if button_choice == resize_choices[0]:
+        print("lets resize")
+        # resize.filter_tuples(checkout_file_salta, output_file) # Causes some issue...
+        new_names_dict = resize.modify_features_and_return_dict(checkout_file_salta, output_file_salta)
+        resize.apply_replacements(output_file_wei, new_names_dict)
+        resize.round_y_axis(output_file_salta, decimal_points=7)
+        pprint.pprint(new_names_dict)
+    else:
+        print("leave as it is")
+    # exit()
+    ####################
+
     # Now concatenated_df contains the contents of all CSV files concatenated together
-    print(f"Concatenated data saved to: {output_file}")
+    print(f"Concatenated data saved to: {output_file_salta}")
     if verbose:
         print("INTEGRATing done!")
         # print("Gnerating URL...")
