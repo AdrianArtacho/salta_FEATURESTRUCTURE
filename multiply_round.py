@@ -18,7 +18,7 @@ def savefile_path(file_path, output_folder, verbose=False):
     if verbose:
         print("substring_before_underscore:", substring_before_underscore)
 
-    generated_path = output_folder+name_string+'/'+substring_before_underscore+'.csv'
+    generated_path = output_folder+name_string+'/'+substring_before_underscore+'_rounded.csv'
 
     if verbose:
         print("generated_path:", generated_path)
@@ -26,7 +26,9 @@ def savefile_path(file_path, output_folder, verbose=False):
     # exit()
     return generated_path
 
-def main(input_path, output_folder='OUTPUT/', factor=100, verbose=True): # multiply_and_round_x_axis
+def main(input_path, output_folder='OUTPUT/', factor=100,  # multiply_and_round_x_axis
+         save_intermediate_file=False,
+         verbose=True): # multiply_and_round_x_axis
 
     # determine savefile path
     generated_path = savefile_path(input_path, output_folder)
@@ -41,10 +43,10 @@ def main(input_path, output_folder='OUTPUT/', factor=100, verbose=True): # multi
     # Multiply all values in the 'x_axis' column by the given factor and round up to the nearest integer
     df['x_axis'] = np.ceil(df['x_axis'] * factor).astype(int)
 
-    # Save the modified DataFrame to a CSV file
-    df.to_csv(generated_path, index=False)
-
-    print(f"Modified file saved to {generated_path}")
+    if save_intermediate_file:
+        # Save the modified DataFrame to a CSV file
+        df.to_csv(generated_path, index=False)
+        print(f"Modified file saved to {generated_path}")
 
     return generated_path
 

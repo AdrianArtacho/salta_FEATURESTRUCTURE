@@ -53,10 +53,13 @@ python CHECK_SALTA.py
 ## Color conventions
 
 > RED mpipe
+>
+> PURPLE irt
 > 
 > BLUE audio
 > 
 > GREEN inert
+>
 
 ---
 
@@ -165,6 +168,10 @@ I could run it locally in node.js to see the error message
 > > ...
 > 
 > ...
+
+---
+
+ERROR with exp12a_all-merged
 
 ---
 
