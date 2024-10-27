@@ -38,6 +38,20 @@ Mind you, this line in `INTEGRATE_sets.py` drops column 'source' to make the fil
 data_reduced = dropcol.main(combined_df,colname='source')
 ```
 
+### Steps
+
+- project ID
+
+- short description
+
+- Path to CLASS/SUBSET / Subfolders
+
+- (here, just choose any of the files)
+
+- Merge features? ONLY ABOVE 10%
+
+- 
+
 ---
 
 ## CHECK_SALTA
@@ -53,13 +67,12 @@ python CHECK_SALTA.py
 ## Color conventions
 
 > RED mpipe
->
+> 
 > PURPLE irt
->
+> 
 > BLUE audio
->
+> 
 > GREEN inert
->
 
 ---
 
@@ -78,7 +91,7 @@ Issue with the wrong X-axis representation in the App
 
 > I dealt with this before. Where could I find that?
 > We encounter again the issue with space on the right from the plots, I can't remember if it was related to a minimum number of samples???
->
+> 
 > **NOW THE X_AXIS REPRESENTS MILLISECONDS**
 
 ---
@@ -92,7 +105,7 @@ analyze csv files directly, if no issue could be found...
 Issue when features have the same name?
 
 > modify them based on the class name in both the csv AND the weights file?
->
+> 
 > ...
 
 ~~Could it be the merged feature names, which may not exist in the weights file?~~
@@ -110,9 +123,9 @@ Could it be that the reason why there are two very similar files?
 ~~Could it be that the generated names are to long?~~
 
 > !!! The issue with the App seems to be the classes !!! The tests that didn't work (6 and 7) are the ones that have more than one different class. BUT `test3`DID work even though it has 2 different classes!
->
+> 
 > It is merging what creates the source column...
->
+> 
 > 112 chars still no problem...
 
 I could run it locally in node.js to see the error message
@@ -122,51 +135,51 @@ I could run it locally in node.js to see the error message
 #### Go systematically
 
 > 1 class (no merge)
->
+> 
 > > mic    `test_19`
-> >
+> > 
 > > mix    `test_20` NO
-> >
+> > 
 > > imu    `test_21` NO                                    2.1mb
-> >
+> > 
 > > mpipe    `test_22` NO                                9.9mb
->
+> 
 > 1 class (merged)
->
+> 
 > > mic     `test_23`
-> >
+> > 
 > > mix
-> >
+> > 
 > > imu
-> >
+> > 
 > > mpipe
->
+> 
 > 2 classes (no merge)
->
+> 
 > > mic + imu    `test_3`
-> >
+> > 
 > > ...
->
+> 
 > 2 classes (each merged as one feature)
->
+> 
 > > mic + imu    `test_5` NO, `test_12` SI    21mb
-> >
+> > 
 > > imu + mpipe `test_6` SI, `test_26`NO    7.9mb
-> >
+> > 
 > > mpipe + mic `test_7` NO, `test_14` SI    20mb
-> >
+> > 
 > > imu + mix `test_8` NO, `test_15` NO    20mb
-> >
+> > 
 > > mic + mix `test_17` NO                            37mb
-> >
+> > 
 > > mpipe + mix `test_16` NO                        25mb
->
+> 
 > 3 classe (each merged)
->
+> 
 > > mic + imu + mpipe `test_18` NO            24mb
-> >
+> > 
 > > ...
->
+> 
 > ...
 
 ---
@@ -178,7 +191,7 @@ ERROR with exp12a_all-merged
 ##### In test88, `SpectralSpread`does funny things
 
 > could there be negative values or sth?
->
+> 
 > ...
 
 ###### Identify where the second (confusing) csv is generated
@@ -196,7 +209,7 @@ ERROR with exp12a_all-merged
 - UPLOAD to Drive:
 
 > exp16a_mic-vs-imu-mpipe
->
+> 
 > exp16a_mic-vs-mix
 
 ---
