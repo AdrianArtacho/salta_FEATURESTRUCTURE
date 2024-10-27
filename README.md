@@ -20,14 +20,14 @@ python3 -m venv ./.venv
 
 Activate venv and run main script:
 
-```shell
+```bash
 python source .venv/bin/activate
 python STRUCT.py
 ```
 
 You will have to enter general infos about the project, select the feature folders (where the individual PDP are) and select -if desired- which features to aggregate together. The results will be stored in `INTER/`, in the form of modified weights file, modified json file and aggregation plots. The last stage will integrate all plots and produce one final .csv file and one finel weights file from the information in `INTER/`:
 
-```shell
+```bash
 # This bit is now integrated in the main `STRUCT.py` script
 python INTEGRATE_sets.py
 ```
@@ -55,9 +55,9 @@ python CHECK_SALTA.py
 > RED mpipe
 >
 > PURPLE irt
-> 
+>
 > BLUE audio
-> 
+>
 > GREEN inert
 >
 
@@ -78,28 +78,28 @@ Issue with the wrong X-axis representation in the App
 
 > I dealt with this before. Where could I find that?
 > We encounter again the issue with space on the right from the plots, I can't remember if it was related to a minimum number of samples???
-
-**NOW THE X_AXIS REPRESENTS MILLISECONDS**
+>
+> **NOW THE X_AXIS REPRESENTS MILLISECONDS**
 
 ---
 
-###### Issue with the App sometimes giving me an error
+### Issue with the App sometimes giving me an error
 
 analyze csv files directly, if no issue could be found...
 
 > ...
 
-Issue when features have the same name? 
+Issue when features have the same name?
 
->  modify them based on the class name in both the csv AND the weights file?
-> 
+> modify them based on the class name in both the csv AND the weights file?
+>
 > ...
 
 ~~Could it be the merged feature names, which may not exist in the weights file?~~
 
 ~~Could it be combining modalities?~~
 
-Could it be that the reason why there are two very similar files? 
+Could it be that the reason why there are two very similar files?
 
 > (note, I NEED the surname for the files, because there are different settings) Does the format hold also for segtree?
 
@@ -110,63 +110,63 @@ Could it be that the reason why there are two very similar files?
 ~~Could it be that the generated names are to long?~~
 
 > !!! The issue with the App seems to be the classes !!! The tests that didn't work (6 and 7) are the ones that have more than one different class. BUT `test3`DID work even though it has 2 different classes!
-> 
+>
 > It is merging what creates the source column...
-> 
+>
 > 112 chars still no problem...
 
 I could run it locally in node.js to see the error message
 
 > ...
 
-###### Go systematically:
+#### Go systematically
 
 > 1 class (no merge)
-> 
+>
 > > mic    `test_19`
-> > 
+> >
 > > mix    `test_20` NO
-> > 
+> >
 > > imu    `test_21` NO                                    2.1mb
-> > 
+> >
 > > mpipe    `test_22` NO                                9.9mb
-> 
+>
 > 1 class (merged)
-> 
+>
 > > mic     `test_23`
-> > 
+> >
 > > mix
-> > 
+> >
 > > imu
-> > 
+> >
 > > mpipe
-> 
+>
 > 2 classes (no merge)
-> 
+>
 > > mic + imu    `test_3`
-> > 
+> >
 > > ...
-> 
+>
 > 2 classes (each merged as one feature)
-> 
+>
 > > mic + imu    `test_5` NO, `test_12` SI    21mb
-> > 
+> >
 > > imu + mpipe `test_6` SI, `test_26`NO    7.9mb
-> > 
+> >
 > > mpipe + mic `test_7` NO, `test_14` SI    20mb
-> > 
+> >
 > > imu + mix `test_8` NO, `test_15` NO    20mb
-> > 
+> >
 > > mic + mix `test_17` NO                            37mb
-> > 
+> >
 > > mpipe + mix `test_16` NO                        25mb
-> 
+>
 > 3 classe (each merged)
-> 
+>
 > > mic + imu + mpipe `test_18` NO            24mb
-> > 
+> >
 > > ...
-> 
+>
 > ...
 
 ---
@@ -175,10 +175,10 @@ ERROR with exp12a_all-merged
 
 ---
 
-###### In test88, `SpectralSpread`does funny things...
+##### In test88, `SpectralSpread`does funny things
 
 > could there be negative values or sth?
-> 
+>
 > ...
 
 ###### Identify where the second (confusing) csv is generated
@@ -196,7 +196,7 @@ ERROR with exp12a_all-merged
 - UPLOAD to Drive:
 
 > exp16a_mic-vs-imu-mpipe
-> 
+>
 > exp16a_mic-vs-mix
 
 ---
@@ -210,8 +210,6 @@ test_2agg:
 > 'INPUT/testu51/testu51-SpectralEntropy.csv',
 > 'INPUT/testu51/testu51-d.csv',
 > 'INTER/testu51/aggregate_MFCC2_MFCC13_MFCC8_MFCC7_MFCC11_MFCC9_MFCC4_MFCC10_MFCC3_MFCC12_MFCC5_MFCC6.csv']
-
-
 
 0,0.0,aggregate_TiltZ_AccelX_TiltY,lower_limit
 
