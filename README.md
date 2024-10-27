@@ -50,7 +50,11 @@ data_reduced = dropcol.main(combined_df,colname='source')
 
 - Merge features? ONLY ABOVE 10%
 
-- 
+- Merge features? (over **aggregate_????**) ... `n` to move on
+
+- go through all feature sets, choose colors according to convention, finalise
+
+- You may choose to go striaght to the UI
 
 ---
 
