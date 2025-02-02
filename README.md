@@ -10,8 +10,11 @@ This repo combines multiple pdp files from different sources, runs the aggregati
 
 2. Create venv
 
-```termminal
+```bash
 python3 -m venv ./.venv
+
+# activate
+source .venv/bin/activate
 ```
 
 ---
